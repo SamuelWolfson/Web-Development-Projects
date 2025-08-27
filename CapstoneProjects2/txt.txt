@@ -1,0 +1,42 @@
+        <div><img class="image" src="./assets/images/Sam profile photo.png" style="float:right;width:100px ;height:100px ;" alt="Sams profile photo">
+            <h1>Samuel Wolfson</h1>
+            </div>
+            <hr>
+            <div><p>I am learning new majors in computer Science while creating projects in web & backend development.<br/>
+            I continuously seek opportunities to expand my skill set and acquire deeper knowledge, as well as 
+            correct work ethics and experience.</p></div>
+            <h2>Education:</h2>
+            <p>Moshe Sharet (Netanya) HS – Mofet Class</p>
+            <ul>
+                <li>5 Units in Computer Science (Java, ASMx86)</li>
+                <li>5 Units in Physics</li>
+                <li>5 Units in Math (Advanced)</li>
+                <li>5 Units in English</li>
+            </ul>
+            <h2>Skills:</h2>
+            <ul>
+                <li>Programming using wide range of Languages: C#, Python, Java, ASMx86.</li>
+                <li>Platforms:  Visual Studio Code, Unity, Bootstrap, Blender, BlueJ, W3Schools.</li>
+                <li>Aditionnal knowledge of SQL Server, PostgreSQL, and Oracle.</li>
+                <li>5 Units in English</li>
+            </ul>
+            <h2>Projects:</h2>
+            <ul>
+                <li>The Vault: A Safe that contains mechanisms based on physical laws. We competed with Our project against Physics majors from other schools nationwide.</li>
+                <li>A restaurant: Simulates processes of restaurant service. One using: Java, BlueJ. And another using:  ASMx86.</li>
+                <li>2D&3D Platforming games: The gameplay involves navigating levels by jumping between platforms and avoiding various hazards. Using: C#, Visual Studio, Blender.</li>
+            </ul>
+            <h2>Hobbies:</h2>
+            <ul>
+                <li>Surfing, Pilates, Yoga, Meditating, Puzzle solving</li>
+                <li>Hiking in nature, Riding a bicycle, Including many other types of sports</li>
+            </ul>
+            <h2>Languages:</h2>
+            <ul>
+                <li>Hebrew: native language; English: Advanced; Russian: basic plus.</li>
+            </ul>
+            <h2>Characteristics:</h2>
+            <ul>
+                <li>Analytical and critical thinker.</li>
+                <li>Curious, adaptable, determined, supportive, collaborative, responsible.</li>
+            </ul> 
