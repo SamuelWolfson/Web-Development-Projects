@@ -9,25 +9,23 @@ const port = 3000;
 // You should not get any 404s or 500 status codes.
 // *********************
 
-app.get("/", (req, res) => {
-  res.send("<h1>Home Page</h1>");
+app.get("/", (req,res) => {
+  res.send("<h1>Hwllo this is sam</h1>");
 });
 
-app.post("/register", (req, res) => {
-  //Do something with the data
+app.post("/register", (req,res) =>{
   res.sendStatus(201);
 });
 
-app.put("/user/angela", (req, res) => {
+app.put("/user/sam", (req,res) => {
   res.sendStatus(200);
 });
 
-app.patch("/user/angela", (req, res) => {
+app.patch("/user/sam", (req,res) => {
   res.sendStatus(200);
 });
 
-app.delete("/user/angela", (req, res) => {
-  //Deleting
+app.delete("/user/sam", (req,res) =>{
   res.sendStatus(200);
 });
 

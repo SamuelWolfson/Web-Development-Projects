@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Random Cat Fact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Titan+One&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+
+</head>
+
+
+<body>
+  <h1>Hover over for a random Cat Fact</h1>
+  <div class="card" style="background-image: url('<%= randomCatImage %>');">
+
+    <p>
+      <%= randomCatFact %>
+    </p>
+  </div>
+  <p class="user">
+    Cat Fact length in Char:<%= randomCatFactLength %>
+  </p>
+  <script>
+  const card = document.querySelector(".card");
+  const factText = document.querySelector(".card p");
+  const factLength = document.querySelector(".user");
+
+  card.addEventListener("mouseenter", async () => {
+    try {
+      const res = await fetch("/new-cat");
+      const data = await res.json();
+
+      // Update image
+      card.style.backgroundImage = `url(${data.image})`;
+
+      // Update fact
+      factText.textContent = data.fact;
+
+      // Update fact length
+      factLength.textContent = "Cat Fact length in Char: " + data.length;
+
+    } catch (err) {
+      console.error("Error fetching new cat data:", err);
+    }
+  });
+</script>
+</body>
+
+</html>
