@@ -5,36 +5,9 @@ import { useDogsStore } from '@/stores/dogs'
 
 const route = useRoute()
 const dogsStore = useDogsStore()
-
-const pageDetails = computed(() => {
-  switch (route.name) {
-    case 'home':
-      return { 
-        title: 'עמוד הבית', 
-        description: 'קבלו תמונת כלב אקראית וגלו גזעים חדשים' 
-      }
-    case 'breeds':
-      return { 
-        title: 'רשימת הגזעים', 
-        description: 'חפשו וסננו גזעי כלבים מכל העולם' 
-      }
-    case 'breed-details':
-      return { 
-        title: `${route.params.breed || ''} :גזע`, 
-        description: 'גלריית תמונות מורחבת של הגזע הנבחר' 
-      }
-    case 'favorites':
-      return { 
-        title: 'המועדפים שלי', 
-        description: 'כל תמונות הכלבים ששמרתם במקום אחר' 
-      }
-    default:
-      return { 
-        title: 'Dog Explorer', 
-        description: 'האפליקציה לגילוי וחיפוש גזעי כלבים' 
-      }
-  }
-})
+  
+  const pageTitle = computed(() => route.meta.title || 'Dog Explorer')
+  const pageDescription = computed(() => route.meta.description || 'האפליקציה לגילוי וחיפוש גזעי כלבים')
 </script>
 
 <template>
@@ -54,8 +27,8 @@ const pageDetails = computed(() => {
     </div>
 
     <div class="header-info">
-      <h1>{{ pageDetails.title }}</h1>
-      <p>{{ pageDetails.description }}</p>
+      <h1>{{ pageTitle }}</h1>
+      <p>{{ pageDescription }}</p>
     </div>
   </header>
 </template>

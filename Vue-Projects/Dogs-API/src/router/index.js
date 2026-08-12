@@ -11,26 +11,46 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView,
+    meta: {
+      title: 'עמוד הבית', 
+      description: 'קבלו תמונת כלב אקראית וגלו גזעים חדשים' 
+    }
   },
   {
     path: '/breeds',
     name: 'breeds',
     component: BreedsView,
+    meta: {
+        title: 'רשימת הגזעים', 
+        description: 'חפשו וסננו גזעי כלבים מכל העולם' 
+    }
   },
   {
     path: '/breeds/:breed',
     name: 'breed-details',
     component: BreedDetailsView,
+    meta: {
+        title: 'בחירת הגזע', 
+        description: 'גלריית תמונות מורחבת של הגזע הנבחר' 
+    }
   },
   {
     path: '/favorites',
     name: 'favorites',
     component: FavoritesView,
+    meta: {
+        title: 'המועדפים שלי', 
+        description: 'כל תמונות הכלבים ששמרתם במקום אחר' 
+    }
   },
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: NotFoundView,
+    meta: {
+      title: 'דף לא נמצא (404)',
+      description: 'העמוד שחיפשת לא קיים'
+    }
   },
 ]
 
