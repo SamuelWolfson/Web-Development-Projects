@@ -22,7 +22,7 @@ const routes = [
     component: BreedsView,
     meta: {
         title: 'רשימת הגזעים', 
-        description: 'כאן אוהבים כלבים מכל העולם' 
+        description: 'אהבה רבה לזנים רבים של כלבים' 
     }
   },
   {
