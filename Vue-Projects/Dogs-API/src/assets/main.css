@@ -1,0 +1,10 @@
+/* הסתרת פס הגלילה בדפדפנים מודרניים (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* הסתרת פס הגלילה ב־Firefox */
+* {
+  scrollbar-width: none;
+}
