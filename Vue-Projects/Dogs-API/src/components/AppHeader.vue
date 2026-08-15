@@ -7,7 +7,7 @@ const route = useRoute()
 const dogsStore = useDogsStore()
   
   const pageTitle = computed(() => route.meta.title || 'Dog Explorer')
-  const pageDescription = computed(() => route.meta.description || 'האפליקציה לגילוי וחיפוש גזעי כלבים')
+  const pageDescription = computed(() => route.meta.description || 'מביעים אהבה לכלבים')
 </script>
 
 <template>
@@ -38,6 +38,8 @@ const dogsStore = useDogsStore()
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 1rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header-top {

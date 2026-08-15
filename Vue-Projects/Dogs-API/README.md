@@ -1,38 +1,75 @@
-# Dogs-API
+# 🐶 אפליקציית אוהבים כלבים
 
-This template should help get you started developing with Vue 3 in Vite.
+אפליקציית ווב מודרנית ומתקדמת לחובבי כלבים, המאפשרת לחפש גזעים שונים, לצפות בגלריות תמונות מרהיבות, ולנהל רשימת מועדפים אישית בצורה נוחה ומהירה.
 
-## Recommended IDE Setup
+---
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 🚀 טכנולוגיות וכלים
+* **Vue.js 3** (Composition API & `<script setup>`)
+* **Vue Router** - לניהול ניווט ומעבר בין דפים
+* **Pinia** - ניהול State גלובלי (כולל שמירה ב-`localStorage`)
+* **CSS3 / Flexbox / Grid** - עיצוב רספונסיבי ומודרני
+* **Dog API** - מקור הנתונים לתמונות וגזעי הכלבים
 
-## Recommended Browser Setup
+---
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## ✨ תכונות עיקריות
+* 🔍 **חיפוש וצפייה בגזעים:** בחירת גזע וטעינת רשימת התמונות המלאה מהשרת.
+* 📄 **תצוגה מדורגת (Pagination מקומי):** 
+  * הצגה ראשונית של 20 תמונות לנוחות ולשיפור הביצועים.
+  * כפתור **"טען תמונות נוספות"** לשחרור עוד 20 תמונות מהזיכרון המקומי בלי לבצע קריאות מיותרות ל-API.
+  * כפתור **"הצג 20 פחות"** לצמצום התצוגה חזרה בצורה הדרגתית.
+* ⭐ **ניהול מועדפים (Favorites):**
+  * שמירת תמונות מועדפות ישירות ל-`localStorage`.
+  * עמוד מועדפים ייעודי המשתמש באותה לוגיקת תצוגה (חלוקה לקבוצות של 20).
+  * אפשרות לניקוי מהיר של כל המועדפים ברגע.
+* 🛡️ **אבטחת נתונים:**
+  * טיפול בערכי `localStorage` פגומים או לא תקינים באמצעות מנגנוני הגנה למניעת קראש באפליקציה.
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## 🛠️ התקנה והרצה
+1. **שכפול המאגר (Clone):**
+   ```bash
+   git clone <repository-url>
 
-## Project Setup
+2. **מעבר לתיקיית הפרויקט:**
+   ```bash
+   cd dog-explorer
+2. **התקנת התלויות (Dependencies):**
+   ```bash
+   npm install
+3. **הפעלת שרת פיתוח:**
+   ```bash
+   npm run dev
+4. **בנייה לפרודקשן (Build)**
+   ```bash
+   npm run build
 
-```sh
-npm install
-```
+## 📂 מבנה הפרוייקט
+src/
+├── assets/             # קבצי עיצוב גלובליים, תמונות רקע ונכסים סטטיים
+├── components/         # רכיבי UI מתמחזרים (Reusable Components)
+│   ├── DogImageCard.vue # רכיב הצגת תמונת כלב בודדת בגלריה (כולל כפתור מועדפים)
+│   ├── LoadingState.vue # רכיב חיווי טעינה בזמן שליפת נתונים מהשרת
+│   ├── ErrorState.vue   # רכיב הצגת שגיאות מערכת עם אפשרות לחזרה לרשימה
+│   └── EmptyState.vue   # רכיב הצגה כאשר אין תוצאות או מועדפים קיימים
+├── router/             # הגדרות הניווט באפליקציה (Vue Router)
+│   └── index.js        # הגדרת הנתיבים (Routes) למעבר בין עמוד הגזעים, הפרטים והמועדפים
+├── services/           # שירותי תקשורת ושליפת נתונים מול ה-API החיצוני
+│   └── dogs.service.js # ריכוז כל הקריאות ל-Dog API (שליפת גזעים ותמונות לפי גזע)
+├── stores/             # ניהול מצב גלובלי (State Management) באמצעות Pinia
+│   └── dogs.store.js   # ניהול רשימת המועדפים, שמירה וטעינה מאובטחת ב-localStorage
+├── views/              # עמודי האפליקציה המרכזיים (Views / Pages)
+│   ├── BreedsView.vue  # עמוד הבית המציג את רשימת כל גזעי הכלבים
+│   ├── BreedDetailsView.vue # עמוד פרטי גזע הכולל את גלריית התמונות, חיתוך ל-20 וכפתורי הבקרה
+│   └── FavoritesView.vue    # עמוד המועדפים הכולל חלוקה לקבוצות וכפתור ניקוי הכל
+├── App.vue             # רכיב השורש של האפליקציה (Root Component, כולל תפריט ניווט ראשי)
+└── main.js             # נקודת הכניסה הראשית (Mounting של Vue, Router וה-Pinia Store)
 
-### Compile and Hot-Reload for Development
+---
 
-```sh
-npm run dev
-```
+## 📚 הוראות הפרויקט
+לעיון בהנחיות המקוריות ובדרישות המלאות של מטלת הפרויקט, ניתן ללחוץ כאן: 
+[🔗 צפייה בהוראות הפרויקט המלאות](<./הוראות לפרוייקט.pdf>)
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```

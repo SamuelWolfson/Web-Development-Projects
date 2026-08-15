@@ -13,7 +13,7 @@ const routes = [
     component: HomeView,
     meta: {
       title: 'עמוד הבית', 
-      description: 'קבלו תמונת כלב אקראית וגלו גזעים חדשים' 
+      description: 'תמונת כלב אקראית וגלו אהבה חדשה' 
     }
   },
   {
@@ -22,7 +22,7 @@ const routes = [
     component: BreedsView,
     meta: {
         title: 'רשימת הגזעים', 
-        description: 'חפשו וסננו גזעי כלבים מכל העולם' 
+        description: 'כאן אוהבים כלבים מכל העולם' 
     }
   },
   {
@@ -30,8 +30,8 @@ const routes = [
     name: 'breed-details',
     component: BreedDetailsView,
     meta: {
-        title: 'בחירת הגזע', 
-        description: 'גלריית תמונות מורחבת של הגזע הנבחר' 
+        title: 'תמונות גזע', 
+        description:'חפש גזע שאתה אוהב' 
     }
   },
   {
@@ -40,7 +40,7 @@ const routes = [
     component: FavoritesView,
     meta: {
         title: 'המועדפים שלי', 
-        description: 'כל תמונות הכלבים ששמרתם במקום אחר' 
+        description: 'אהבה לכל הכלבים' 
     }
   },
   {

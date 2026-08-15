@@ -1,23 +1,28 @@
 <script setup>
+
 import { RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
+
 </script>
 
 <template>
+
   <div class="app-container">
+
     <AppHeader />
-    <main class="main-content">
-      <RouterView />
-    </main>
+
+    <RouterView class="main-content" />
+
   </div>
+
 </template>
 
 <style scoped>
 .app-container {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .main-content {
@@ -25,4 +30,5 @@ import AppHeader from './components/AppHeader.vue'
   padding: 2rem;
   background-color: #f8f9fa;
 }
+
 </style>
