@@ -14,7 +14,7 @@ defineProps({ message: { type: String, default: '...טוען תמונת כלב �
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: scpace-between;
+  justify-content: space-between;
   padding: 4rem;
   gap: 6rem;
 }
