@@ -81,7 +81,6 @@ const dogsStore = useDogsStore()
   filter: drop-shadow(0 8px 20px rgba(255, 107, 107, 0.5));
 }
 
-/* ================= טאבים / כפתורי ניווט (וואו!) ================= */
 .nav-links {
   display: flex;
   gap: 12px;

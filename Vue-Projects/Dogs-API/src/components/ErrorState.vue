@@ -68,9 +68,9 @@ p {
   display: inline-block;
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #42b983; /* צבע ירוק לדוגמה */
+  background-color: #42b983;
   color: white;
-  text-decoration: none; /* מסיר את הקו התחתון של הקישור */
+  text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
   transition: background-color 0.3s;
