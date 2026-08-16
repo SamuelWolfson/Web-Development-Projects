@@ -40,6 +40,9 @@ const dogsStore = useDogsStore()
   padding: 1rem 2rem;
   width: 100%;
   box-sizing: border-box;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 5px;
 }
 
 .header-top {
