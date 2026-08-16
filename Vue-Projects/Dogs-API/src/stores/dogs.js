@@ -5,6 +5,7 @@ import { useLocalStorage } from '@vueuse/core'
 
 export const useDogsStore = defineStore('dogs', () => {
   const favorites = useLocalStorage('dogs_favorites', [])
+  const recentDogs = useLocalStorage('dogs_recent', [])
 
   const favoritesCount = computed(() => favorites.value.length)
 
@@ -47,6 +48,25 @@ export const useDogsStore = defineStore('dogs', () => {
         isLoadingBreeds.value = false
       }
     }
+  
+  const addToRecent = (dog) => {
+    if (!dog || !dog.imageUrl) return
+
+    const cleanDog = {
+      imageUrl: dog.imageUrl,
+      breed: dog.breed
+    }
+
+    if (recentDogs.value.length > 0 && recentDogs.value[0].imageUrl === cleanDog.imageUrl) {
+        return
+      }
+
+    recentDogs.value.unshift(cleanDog)
+      
+    if (recentDogs.value.length > 6) {
+      recentDogs.value.pop()
+    }
+  }
 
   const currentDog = ref({ imageUrl: '', breed: '' })
   const isLoadingDog = ref(false)
@@ -57,6 +77,7 @@ export const useDogsStore = defineStore('dogs', () => {
     try {
       const data = await dogsService.getRandomDogImage()
       currentDog.value = data
+      addToRecent(currentDog.value)
     } catch (error) {
       console.error('Error fetching random dog:', error)
       errorMessage.value = 'שגיאה בטעינת תמונה אקראית. בדוק את החיבור לרשת.'
@@ -79,5 +100,7 @@ export const useDogsStore = defineStore('dogs', () => {
     errorMessage,
     isLoadingBreeds,
     breedsErrorMessage,
+    recentDogs,
+    addToRecent
   }
 })

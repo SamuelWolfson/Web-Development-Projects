@@ -13,7 +13,7 @@ const errorMessage = ref('')
 const fetchNewDog = async () => {
   isLoading.value = true
   errorMessage.value = ''
-
+  
   try {
     await dogsStore.fetchRandomDog()
   } catch (error) {
@@ -22,13 +22,20 @@ const fetchNewDog = async () => {
     isLoading.value = false
   }
 }
+
+const visibleRecentDogs = computed(() => {
+  return dogsStore.recentDogs
+    .filter(dog => dog.imageUrl !== dogsStore.currentDog.imageUrl)
+    .slice(0, 5)
+})
+
 </script>
 
 <template>
   <div class="home-view">
     <h2>אוהב כ-לב</h2>
 
-    <LoadingState v-if="dogsStore.isLoadingDog && !dogsStore.currentDog.imageUrl" message="טוען תמונה אקראית..." />
+    <LoadingState v-if="dogsStore.isLoadingDog && !dogsStore.currentDog.imageUrl" message="...טוען תמונה אקראית" />
 
     <ErrorState v-else-if="dogsStore.errorMessage" :message="dogsStore.errorMessage" />
 
@@ -51,6 +58,23 @@ const fetchNewDog = async () => {
     >
       {{ dogsStore.isLoadingDog ? 'טוען...' : 'החלף תמונה' }}
     </button>
+
+  <section v-if="visibleRecentDogs.length > 0" class="recent-dogs-section" >
+        <h3>הכלבים האחרונים שצפית בהם</h3>
+        
+
+
+    <div class="recent-grid">
+      <DogImageCard 
+        v-for="(dog, index) in visibleRecentDogs" 
+        :key="dog.imageUrl || index"
+        :image-url="dog.imageUrl"
+        :breed="dog.breed"
+        :show-breed-name="true"
+        class="recent-mini-card" 
+      />
+    </div>
+  </section>
   </div>
 </template>
 
@@ -123,4 +147,58 @@ const fetchNewDog = async () => {
   box-shadow: none;
   transform: none;
 }
+
+.recent-mini-card :deep(.image-container) {
+  width: 100px;
+  height: 100px;
+}
+
+.recent-mini-card {
+  flex: 0 0 100px;
+  width: 100px;
+}
+
+.recent-dogs-section {
+  margin-top: 1.5rem;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.recent-dogs-section h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.recent-grid {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.recent-mini-card :deep(.btn-favorite) {
+  width: 30px;
+  height: 30px;
+  top: 6px;
+  right: 6px;
+}
+
+.recent-mini-card :deep(.heart-icon) {
+  width: 18px;
+  height: 18px;
+}
+
+.recent-mini-card {
+  flex: 0 0 100px;
+}
+
+.recent-mini-card :deep(.breed-name) {
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
 </style>

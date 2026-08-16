@@ -34,7 +34,7 @@ const filteredBreeds = computed(() => {
 
         <LoadingState 
             v-if="dogsStore.isLoadingBreeds && !dogsStore.breeds.length" 
-            message="טוען רשימת גזעים..." 
+            message="טוען רשימת גזעים" 
         />
 
         <ErrorState 
