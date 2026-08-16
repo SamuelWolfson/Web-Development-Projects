@@ -22,7 +22,7 @@ const routes = [
     component: BreedsView,
     meta: {
         title: 'רשימת הגזעים', 
-        description: 'אהבה רבה לזנים רבים של כלבים' 
+        description: 'יד ביד, תגלו עולם שלם לאהוב' 
     }
   },
   {
@@ -30,8 +30,8 @@ const routes = [
     name: 'breed-details',
     component: BreedDetailsView,
     meta: {
-        title: 'תמונות גזע', 
-        description:'חפש גזע שאתה אוהב' 
+        title: 'גזע הכלב במדוייק', 
+        description:'מצא אהבה יחד עם סינון הגזע' 
     }
   },
   {
@@ -39,7 +39,7 @@ const routes = [
     name: 'favorites',
     component: FavoritesView,
     meta: {
-        title: 'המועדפים שלי', 
+        title: 'מלובלבים שלי', 
         description: 'אהבה לכל הכלבים' 
     }
   },

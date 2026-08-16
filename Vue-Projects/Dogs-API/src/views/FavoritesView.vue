@@ -8,8 +8,8 @@ const dogsStore = useDogsStore()
 
 const clearAllFavorites = () => {
    if (confirm('?האם אתה בטוח שברצונך למחוק את כל המועדפים')) {
-      dogsStore.clearFavorites() // או הפונקציה המתאימה אצלך בסטอร์
-      displayedCount.value = 20 // איפוס חזרה ל-20
+      dogsStore.clearFavorites()
+      displayedCount.value = 20
    }
 }
 
@@ -34,11 +34,10 @@ const showLess = () => {
 
 <template>
    <div class="favorites-view">
-      <h2 class="title">התמונות המועדפות שלי ({{ allFavorites.length }})</h2>
+      <h2 class="title">{{ allFavorites.length }} :כמות הכלבים שלבלבתי</h2>
 
       <div v-if="allFavorites.length > 0" class="gallery-container">
          
-         <!-- כפתור ניקוי כל המועדפים -->
          <div class="actions-header">
             <button @click="clearAllFavorites" class="btn btn-danger">
                נקה את כל המועדפים
@@ -54,7 +53,6 @@ const showLess = () => {
             />
          </div>
 
-         <!-- אזור כפתורי טעינת עוד / הצג פחות -->
          <div v-if="allFavorites.length > 20" class="controls-container">
             <button 
                v-if="displayedCount < allFavorites.length" 
@@ -80,8 +78,8 @@ const showLess = () => {
 
       <EmptyState 
          v-else 
-         title="אין מועדפים" 
-         message="עדיין לא שמרת תמונות למועדפים." 
+         title="לא נמצאו כלבים מלובלבים" 
+         message="לבלול והבעת התשוקה לכלבים" 
       />
    </div>
 </template>
