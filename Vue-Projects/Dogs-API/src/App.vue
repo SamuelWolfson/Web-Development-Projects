@@ -1,5 +1,4 @@
 <script setup>
-
 import { RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
 import { useDogsStore } from '@/stores/dogs'
@@ -9,12 +8,11 @@ const dogsStore = useDogsStore()
 
 onMounted(() => {
   dogsStore.fetchAllBreeds()
-  
+
   if (!dogsStore.currentDog.imageUrl) {
     dogsStore.fetchRandomDog()
   }
 })
-
 </script>
 
 <template>

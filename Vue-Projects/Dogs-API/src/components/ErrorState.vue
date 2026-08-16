@@ -1,5 +1,4 @@
 <script setup>
-
 defineProps({
   message: {
     type: String,
@@ -10,7 +9,6 @@ defineProps({
     default: false
   }
 })
-
 </script>
 
 <template>
@@ -62,7 +60,6 @@ p {
   margin: 0 0 20px 0;
   font-size: 1rem;
 }
-
 
 .back-button {
   display: inline-block;

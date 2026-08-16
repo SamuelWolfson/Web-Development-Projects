@@ -1,5 +1,4 @@
 <script setup>
-
 import { ref, computed } from 'vue'
 import { useDogsStore } from '@/stores/dogs'
 import LoadingState from '@/components/LoadingState.vue'
@@ -23,7 +22,6 @@ const fetchNewDog = async () => {
     isLoading.value = false
   }
 }
-
 </script>
 
 <template>

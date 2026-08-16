@@ -198,5 +198,4 @@ const showLess = () => {
    transform: translateY(-3px);
    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
 }
-
 </style>
