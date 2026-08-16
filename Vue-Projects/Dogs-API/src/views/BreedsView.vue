@@ -1,94 +1,61 @@
 <script setup>
-
-import { ref, computed, onMounted } from 'vue'
-import { dogsService } from '@/services/dogs.service'
+import { ref, computed } from 'vue'
+import { useDogsStore } from '@/stores/dogs'
 import BreedCard from '@/components/BreedCard.vue'
 import LoadingState from '@/components/LoadingState.vue'
 import ErrorState from '@/components/ErrorState.vue'
 import EmptyState from '@/components/EmptyState.vue'
 
-const breeds = ref([])
+const dogsStore = useDogsStore()
 const searchQuery = ref('')
-const isLoading = ref(true)
-const errorMessage = ref('')
-
-const fetchBreedsList = async () => {
-
-  isLoading.value = true
-  errorMessage.value = ''
-
-  try {
-    breeds.value = await dogsService.getAllBreeds()
-
-  } catch (error) {
-    console.error('Error fetching breeds list:', error)
-    errorMessage.value = 'שגיאה בטעינת רשימת הגזעים'
-    
-  } finally {
-    isLoading.value = false
-  }
-}
 
 const filteredBreeds = computed(() => {
-
+  const breedsList = dogsStore.breeds || []
   if (!searchQuery.value.trim()) {
-    return breeds.value
+    return breedsList
   }
-
   const query = searchQuery.value.toLowerCase().trim()
-
-  return breeds.value.filter(breed => breed.toLowerCase().includes(query))
-
+  return breedsList.filter(breed => breed.toLowerCase().includes(query))
 })
-
-onMounted(() => {
-  fetchBreedsList()
-})
-
 </script>
 
 <template>
+    <div class="breeds-view">
+        <h2 class="title">רשימת גזעי הכלבים</h2>
 
-  <div class="breeds-view">
+        <div class="search-container">
+            <input 
+                type="text" 
+                v-model="searchQuery" 
+                placeholder="חפש גזע כלבים" 
+                class="search-input"
+            />
+        </div>
 
-    <h2 class="title">רשימת גזעי הכלבים</h2>
+        <LoadingState 
+            v-if="dogsStore.isLoadingBreeds && !dogsStore.breeds.length" 
+            message="טוען רשימת גזעים..." 
+        />
 
-    <div class="search-container">
+        <ErrorState 
+            v-else-if="dogsStore.breedsErrorMessage" 
+            :message="dogsStore.breedsErrorMessage" 
+        />
 
-      <input 
-        type="text" 
-        v-model="searchQuery" 
-        placeholder="חפש גזע כלבים" 
-        class="search-input"
-      />
+        <div v-else-if="filteredBreeds.length > 0" class="breeds-grid">
+            <BreedCard 
+                v-for="(breed, index) in filteredBreeds" 
+                :key="index" 
+                :breed="breed" 
+            />
+        </div>
+
+        <EmptyState 
+            v-else 
+            title="לא נמצאו תוצאות" 
+            message="לא נמצאו גזעים מתאימים, חפש שם גזע שונה" 
+        />
     </div>
-
-    <LoadingState 
-      v-if="isLoading" 
-      message="טוען רשימת גזעים" 
-    />
-
-    <ErrorState 
-      v-else-if="errorMessage" 
-      :message="errorMessage" 
-    />
-
-    <div v-else-if="filteredBreeds.length > 0" class="breeds-grid">
-      <BreedCard 
-        v-for="(breed, index) in filteredBreeds" 
-        :key="index" 
-        :breed="breed" 
-      />
-    </div>
-
-    <EmptyState 
-      v-else 
-      title="לא נמצאו תוצאות" 
-      message="לא נמצאו גזעים מתאימים, חפש שם גזע שונה" 
-    />
-
-  </div>
-
 </template>
 
 <style scoped>
@@ -102,7 +69,6 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
-/* עיצוב כותרת העמוד עם פס מדורג תחתיה */
 .title {
   font-size: 2.4rem;
   font-weight: 800;
@@ -126,7 +92,6 @@ onMounted(() => {
   border-radius: 2px;
 }
 
-/* אזור החיפוש */
 .search-container {
   width: 100%;
   max-width: 550px;
@@ -134,7 +99,6 @@ onMounted(() => {
   justify-content: center;
 }
 
-/* שדה חיפוש בעיצוב פרימיום מרהיב */
 .search-input {
   width: 100%;
   padding: 0.9rem 1.25rem;
@@ -164,7 +128,6 @@ onMounted(() => {
   transform: translateY(-1px);
 }
 
-/* גריד גזעי הכלבים עם אנימציית הופעה חלקה */
 .breeds-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

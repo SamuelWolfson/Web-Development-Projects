@@ -1,36 +1,22 @@
 <script setup>
 
-import { ref, onMounted, computed } from 'vue'
-import { dogsService } from '@/services/dogs.service'
+import { ref, computed } from 'vue'
+import { useDogsStore } from '@/stores/dogs'
 import LoadingState from '@/components/LoadingState.vue'
 import ErrorState from '@/components/ErrorState.vue'
 import EmptyState from '@/components/EmptyState.vue'
 import DogImageCard from '@/components/DogImageCard.vue'
 
+const dogsStore = useDogsStore()
 const isLoading = ref(false)
 const errorMessage = ref('')
 
-const buttonText = computed(() => {
-
-  if (isLoading.value) return 'טוען'
-  if (errorMessage.value) return 'נסה שוב'
-  return 'החלף תמונה'
-
-})
-
-const dogData = ref({
-  imageUrl: '',
-  breed: ''
-})
-
-const fetchRandomDog = async () => {
-
+const fetchNewDog = async () => {
   isLoading.value = true
   errorMessage.value = ''
 
   try {
-    const data = await dogsService.getRandomDogImage()
-    dogData.value = data
+    await dogsStore.fetchRandomDog()
   } catch (error) {
     errorMessage.value = '.לא ניתן היה לטעון תמונה אקראית. בדוק את החיבור לרשת '
   } finally {
@@ -38,51 +24,40 @@ const fetchRandomDog = async () => {
   }
 }
 
-onMounted(() => {
-  fetchRandomDog()
-})
-
 </script>
 
 <template>
-
   <div class="home-view">
-
     <h2>אוהב כ-לב</h2>
 
-      <LoadingState v-if="isLoading" buttonText="טוען" message="טוען תמונה אקראית" />
+    <LoadingState v-if="dogsStore.isLoadingDog && !dogsStore.currentDog.imageUrl" message="טוען תמונה אקראית..." />
 
-      <ErrorState 
-      v-else-if="errorMessage" 
-      :message="errorMessage" 
-      />
+    <ErrorState v-else-if="dogsStore.errorMessage" :message="dogsStore.errorMessage" />
 
-      <DogImageCard 
-        v-else-if="dogData.imageUrl"
-        :image-url="dogData.imageUrl"
-        :breed="dogData.breed"
-        :is-loading="isLoading"
-      />
+    <DogImageCard 
+      v-else-if="dogsStore.currentDog.imageUrl"
+      :image-url="dogsStore.currentDog.imageUrl"
+      :breed="dogsStore.currentDog.breed"
+    />
+
+    <EmptyState 
+      v-else 
+      title="אין תמונה להצגה" 
+      message="לחץ על הכפתור כדי לטעון תמונה" 
+    />
   
-      <EmptyState 
-        v-else 
-        title="אין תמונה להצגה" 
-        message="לחץ על הכפתור כדי לטעון תמונה" 
-      />
-    
-      <button 
-      @click="fetchRandomDog" 
-      :disabled="isLoading" 
+    <button 
+      @click="fetchNewDog" 
+      :disabled="dogsStore.isLoadingDog" 
       class="btn-fetch"
-      >
-      {{ buttonText }}
-      </button>
-
+    >
+      {{ dogsStore.isLoadingDog ? 'טוען...' : 'החלף תמונה' }}
+    </button>
   </div>
-
 </template>
 
 <style scoped>
+
 .home-view {
   display: flex;
   flex-direction: column;
@@ -95,7 +70,6 @@ onMounted(() => {
   text-align: center;
 }
 
-/* עיצוב כותרת העמוד */
 .home-view h2 {
   font-size: 2.4rem;
   font-weight: 800;
@@ -118,7 +92,6 @@ onMounted(() => {
   border-radius: 2px;
 }
 
-/* עיצוב כפתור החלפת התמונה (וואו!) */
 .btn-fetch {
   padding: 0.85rem 2rem;
   font-size: 1.05rem;

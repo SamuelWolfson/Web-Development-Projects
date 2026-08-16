@@ -2,6 +2,18 @@
 
 import { RouterView } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
+import { useDogsStore } from '@/stores/dogs'
+import { onMounted } from 'vue'
+
+const dogsStore = useDogsStore()
+
+onMounted(() => {
+  dogsStore.fetchAllBreeds()
+  
+  if (!dogsStore.currentDog.imageUrl) {
+    dogsStore.fetchRandomDog()
+  }
+})
 
 </script>
 
@@ -23,14 +35,13 @@ import AppHeader from './components/AppHeader.vue'
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center; /* ממרכז את כל הרכיבים אופקית */
+  align-items: center; 
   width: 100%;
   background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
   color: #1f2937;
   box-sizing: border-box;
 }
 
-/* דואג שגם ההדר למעלה יישב ברוחב ובמרכז הנכון */
 .app-container > :deep(header),
 .app-container > .app-header {
   width: 100%;
@@ -41,7 +52,7 @@ import AppHeader from './components/AppHeader.vue'
 .main-content-wrapper {
   width: 100%;
   display: flex;
-  justify-content: center; /* ממרכז את קופסת התוכן */
+  justify-content: center;
   padding: 2.5rem 1.5rem;
   box-sizing: border-box;
 }

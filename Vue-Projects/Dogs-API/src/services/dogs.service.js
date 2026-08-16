@@ -7,7 +7,6 @@ const apiClient = axios.create({
 
 export const dogsService = {
   async getRandomDogImage() {
-    try {
       const response = await apiClient.get('/breeds/image/random')
 
       const imageUrl = response.data.message
@@ -18,10 +17,6 @@ export const dogsService = {
         imageUrl,
         breed: formattedBreed
       }
-    } catch (error) {
-      console.error('API Error:', error)
-      throw error
-    }
   },
 
   async getAllBreeds() {

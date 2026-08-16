@@ -57,7 +57,7 @@ const dogsStore = useDogsStore()
   text-decoration: none;
 }
 
-.app-name { /* התאם את הקלאס לפי מה שקיים אצלך, או תן קלאס משלך */
+.app-name {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -66,7 +66,7 @@ const dogsStore = useDogsStore()
   cursor: pointer;
   background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff6b6b);
   -webkit-background-clip: text;
-  background-clip: text; /* <--- הוספנו את זה כאן כדי לפתור את האזהרה */
+  background-clip: text; 
   -webkit-text-fill-color: transparent;
   text-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -101,7 +101,6 @@ const dogsStore = useDogsStore()
   overflow: hidden;
 }
 
-/* אפקט ריחוף על הכפתורים */
 .nav-links a:hover {
   color: #ff6b6b;
   background: rgba(255, 255, 255, 0.8);
@@ -109,7 +108,6 @@ const dogsStore = useDogsStore()
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* כפתור פעיל (Router Link Active) בעיצוב מרהיב */
 .nav-links a.router-link-active {
   background: linear-gradient(135deg, #ff7e5f, #ff6b6b);
   color: #ffffff;
@@ -122,7 +120,6 @@ const dogsStore = useDogsStore()
   transform: translateY(1px) scale(0.97);
 }
 
-/* ================= כותרות ועמודים (Header Info) ================= */
 .header-info {
   margin-top: 1.5rem;
   text-align: right;
@@ -140,7 +137,7 @@ const dogsStore = useDogsStore()
   font-weight: 800;
   background: linear-gradient(135deg, #2c3e50, #4b5563);
   -webkit-background-clip: text;
-  background-clip: text; /* <--- הוספנו את זה כאן כדי לפתור את האזהרה */
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
 }

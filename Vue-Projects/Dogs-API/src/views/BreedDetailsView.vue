@@ -5,7 +5,6 @@ import { dogsService } from '@/services/dogs.service'
 import DogImageCard from '@/components/DogImageCard.vue'
 import LoadingState from '@/components/LoadingState.vue'
 import ErrorState from '@/components/ErrorState.vue'
-// import EmptyState from '@/components/EmptyState.vue'
 
 const route = useRoute()
 const breedName = route.params.breed
@@ -77,13 +76,13 @@ onMounted(() => {
 				v-for="(url, index) in visibleImages" 
 				:key="index" 
 				:imageUrl="url" 
-			/>
+				:showBreedName="false"
+				:breed="breedName"
+				/>
 		</div>
 
-		<!-- אזור הכפתורים -->
 		<div v-if="allImages.length > 20" class="controls-container">
 			
-			<!-- כפתור טעינת עוד - יוצג כל עוד יש עוד תמונות להציג -->
 			<button 
 				v-if="displayedCount < allImages.length" 
 				@click="loadMore" 
@@ -92,7 +91,6 @@ onMounted(() => {
 				טען תמונות נוספות
 			</button>
 
-			<!-- כפתור הצג 20 פחות - יוצג ברגע שהמשתמש טען מעל 20 תמונות -->
 			<button 
 				v-if="displayedCount > 20" 
 				@click="showLess" 
@@ -101,7 +99,6 @@ onMounted(() => {
 				הצג 20 פחות
 			</button>
 
-			<!-- הודעה אם הגענו לסוף ואין יותר מה לטעון -->
 			<p v-if="displayedCount >= allImages.length && allImages.length > 20" class="end-message">
 				אין עוד תמונות להציג
 			</p>
@@ -162,7 +159,7 @@ onMounted(() => {
    font-size: 1.05rem;
    font-weight: 600;
    border: none;
-   border-radius: 50px; /* הופך את הכפתור לצורה עגולה ויוקרתית */
+   border-radius: 50px;
    cursor: pointer;
    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
    transition: all 0.25s ease;
@@ -178,7 +175,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-   background: linear-gradient(135deg, #3b82f6, #1d4ed8); /* מעבר צבעים עדין (Gradient) שנותן מראה מודרני */
+   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
    color: white;
 }
 
@@ -189,7 +186,7 @@ onMounted(() => {
 .btn-secondary {
    background-color: #ffffff;
    color: #374151;
-   border: 2px solid #e5e7eb; /* מסגרת עבה וברורה יותר */
+   border: 2px solid #e5e7eb;
 }
 
 .btn-secondary:hover {

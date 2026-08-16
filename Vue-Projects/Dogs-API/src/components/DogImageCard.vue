@@ -5,6 +5,7 @@ import { useDogsStore } from '@/stores/dogs'
 const props = defineProps({
   imageUrl: { type: String, required: true },
   breed: { type: String, required: false },
+  showBreedName: { type: Boolean, default: true }
 })
 
 const dogsStore = useDogsStore()
@@ -41,7 +42,7 @@ const handleFavoriteClick = () => {
       </button>
     </div>
 
-    <h3 class="breed-name">{{ breed }}</h3>
+    <h3 v-if="showBreedName" class="breed-name">{{ breed }}</h3>
   </div>
 </template>
 
