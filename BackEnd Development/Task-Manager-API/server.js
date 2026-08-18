@@ -3,8 +3,8 @@ dotenv.config();
 
 import express from 'express';
 import mongoose from 'mongoose';
-import authRoute from './routes/auth'
-import taskRoute from './routes/task'
+import authRoute from './routes/auth.js'
+import taskRoute from './routes/task.js'
 
 const app = express();
 

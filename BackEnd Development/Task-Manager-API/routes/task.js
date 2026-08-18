@@ -1,6 +1,6 @@
 import express from 'express'
-import Task from '../models/Task'
-import authMiddleware from '../middleware/auth'
+import Task from '../models/Task.js'
+import authMiddleware from '../middleware/auth.js'
 
 const router = express.Router();
 
