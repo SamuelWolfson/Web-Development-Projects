@@ -1,0 +1,78 @@
+import express from 'express'
+import Task from '../models/Task'
+import authMiddleware from '../middleware/auth'
+
+const router = express.router();
+
+router.use(authMiddleware);
+
+router.post('/', async (req, res) => {
+    try {
+        const newTask = new Task({
+            title: req.body.title,
+            message: req.body.title,
+            owner: req.user.userId
+        });
+        
+        await newTask.save();
+        res.status(201).json(newTask);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const tasks = await Task.find({ owner: req.user.userId });
+        res.json(tasks);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const task = await Task.findOne({ _id: req.params.id, owner: req.user.userId });
+        if (!task) return res.status(404).json({ message: 'Task not found' });
+        res.json(task);
+// להמשיך פה
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.patch('/:id', async (req, res) => {
+    try {
+        const newTask = new Task({
+            title: req.body.title,
+            message: req.body.title,
+            owner: req.user.userId
+        });
+        
+        await newTask.save();
+        res.status(201).json(newTask);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const newTask = new Task({
+            title: req.body.title,
+            message: req.body.title,
+            owner: req.user.userId
+        });
+        
+        await newTask.save();
+        res.status(201).json(newTask);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+export default router;

@@ -8,6 +8,6 @@ const app = express();
 
 app.use(authRoute);
 
-app.use(taskRoute);
+app.use('/tasks', taskRoute);
 
 dotenv.config();

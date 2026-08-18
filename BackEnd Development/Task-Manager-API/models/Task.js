@@ -21,7 +21,7 @@ owner: {
     ref: 'User'
 }
 },{
-    timestamp:true
+    timestamps:true
 });
 
 const Task = mongoose.model('Task', TaskSchema);
