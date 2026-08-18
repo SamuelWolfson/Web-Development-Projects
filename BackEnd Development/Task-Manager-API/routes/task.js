@@ -2,7 +2,7 @@ import express from 'express'
 import Task from '../models/Task'
 import authMiddleware from '../middleware/auth'
 
-const router = express.router();
+const router = express.Router();
 
 router.use(authMiddleware);
 
@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
     try {
         const newTask = new Task({
             title: req.body.title,
-            message: req.body.title,
+            message: req.body.message,
             owner: req.user.userId
         });
         
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
         const task = await Task.findOne({ _id: req.params.id, owner: req.user.userId });
         if (!task) return res.status(404).json({ message: 'Task not found' });
         res.json(task);
-// להמשיך פה
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -45,14 +45,10 @@ router.get('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
     try {
-        const newTask = new Task({
-            title: req.body.title,
-            message: req.body.title,
-            owner: req.user.userId
-        });
-        
-        await newTask.save();
-        res.status(201).json(newTask);
+        const updatedTask = await Task.findOneAndUpdate({ _id: req.params.id, owner: req.user.userId },
+             req.body, { new: true, runValidators:true });
+        if(!updatedTask) return res.status(404).json({ message: 'Could not update task' });
+        res.json(updatedTask);
 
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -61,14 +57,13 @@ router.patch('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        const newTask = new Task({
-            title: req.body.title,
-            message: req.body.title,
+        const deletedTask = await Task.findOneAndDelete({ 
+            _id: req.params.id,
             owner: req.user.userId
-        });
+         })
         
-        await newTask.save();
-        res.status(201).json(newTask);
+         if(!deletedTask) return res.status(404).json('Task not found, to delete it');
+         res.json({ message: 'Task was deleted successfully' });
 
     } catch (err) {
         res.status(500).json({ error: err.message });
