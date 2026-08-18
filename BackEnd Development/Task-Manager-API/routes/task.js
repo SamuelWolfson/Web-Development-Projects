@@ -46,7 +46,7 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     try {
         const updatedTask = await Task.findOneAndUpdate({ _id: req.params.id, owner: req.user.userId },
-             req.body, { new: true, runValidators:true });
+             req.body, { returnDocument: 'after', runValidators:true });
         if(!updatedTask) return res.status(404).json({ message: 'Could not update task' });
         res.json(updatedTask);
 
