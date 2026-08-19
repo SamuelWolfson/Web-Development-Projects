@@ -2,15 +2,13 @@ import jwt from 'jsonwebtoken'
 
 const authMiddleware = (req,res,next) => {
 
-const authHeader = req.headers.authorization;
+const token = req.cookies.token;
 
-if (!authHeader || !authHeader.startsWith('Bearer ')){
+if (!token){
     return res.status(401).json({ message: 'Authentication failed: no token provided ' });
 }
 
 try{
-    const token = authHeader.split(' ')[1];
-
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = {userId: decodedToken.userId };

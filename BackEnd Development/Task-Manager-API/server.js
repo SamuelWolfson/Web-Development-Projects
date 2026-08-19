@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
+import cookieParser from 'cookie-parser';
+
 import authRoutes from './routes/auth.js';
 import taskRoutes from './routes/task.js';
 
@@ -10,6 +12,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/auth', authRoutes);
 app.use('/tasks', taskRoutes);

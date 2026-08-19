@@ -33,10 +33,20 @@ try{
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ token });
+    res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 3600000
+    });
+
+    res.json({ message: 'User logged in successfully' });
 } catch (err) {
     res.status(500).json({ error: err.message });
 }
+});
+
+router.post('/logout', async (req, res) => {
+    res.clearCookie('token');
+    res.json({ message: 'User logged out successfully' });
 });
 
 export default router;
