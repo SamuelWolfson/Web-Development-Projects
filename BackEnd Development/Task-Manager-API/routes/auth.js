@@ -2,10 +2,22 @@ import express from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
+import { body, validationResult } from 'express-validator'
 
 const router = express.Router();
 
-router.post('/register', async (req,res) => {
+router.post('/register', [body('username').isString()
+    .isLength({ min: 3 })
+    .withMessage('Username must be at least 3 letters long')
+    .trim(), body('password')
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long')
+    ] , async (req, res, next) => {
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty())
+            return res.status(400).json({ errors: errors.array() });
+        
 try{
     const { username, password } = req.body;
 
@@ -17,11 +29,31 @@ try{
 
     res.status(201).json({ message:'User created successfully!' });
 } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    if (err.code === 11000) {
+
+            err.statusCode = 400;
+            err.message = 'Username is already taken';
+        }
+
+        next(err);
 }
 });
 
-router.post('/login', async (req,res) => {
+router.post('/login', [
+    body('username').notEmpty()
+    .withMessage('Username is required')
+    .trim(),
+    body('password')
+    .notEmpty()
+    .withMessage('Password is required')
+] , async (req, res, next) => {
+
+            const errors = validationResult(req);
+
+        if(!errors.isEmpty())
+            return res.status(400).json({ errors: errors.array() });
+        
 try{
     const { username, password } = req.body;
 
@@ -40,7 +72,7 @@ try{
 
     res.json({ message: 'User logged in successfully' });
 } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
 }
 });
 

@@ -1,12 +1,28 @@
 import express from 'express'
 import Task from '../models/Task.js'
 import authMiddleware from '../middleware/auth.js'
+import { body, param, validationResult } from 'express-validator'
 
 const router = express.Router();
 
 router.use(authMiddleware);
 
-router.post('/', async (req, res) => {
+router.post('/', [
+    body('title')
+    .isString()
+    .notEmpty()
+    .withMessage('Task title is required')
+    .trim(),
+    body('message')
+    .optional()
+    .isString()
+    .trim()
+] , async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty())
+        return res.status(400).json({ errors: errors.array() });
+
     try {
         const newTask = new Task({
             title: req.body.title,
@@ -18,32 +34,63 @@ router.post('/', async (req, res) => {
         res.status(201).json(newTask);
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
     try {
         const tasks = await Task.find({ owner: req.user.userId });
         res.json(tasks);
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id',
+    [
+    param('id')
+    .isMongoId()
+    .withMessage('Invalid task ID format')
+    ], async (req, res, next) => {
+    
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty())
+        return res.status(400).json({ errors: errors.array() });
+    
     try {
         const task = await Task.findOne({ _id: req.params.id, owner: req.user.userId });
         if (!task) return res.status(404).json({ message: 'Task not found' });
         res.json(task);
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id',
+    [
+    param('id')
+        .isMongoId()
+        .withMessage('Invalid task ID format'),
+    body('title')
+        .optional()
+        .isString()
+        .notEmpty()
+        .withMessage('Title cannot be empty')
+        .trim(),
+    body('message')
+        .optional()
+        .isString()
+        .trim()
+    ] ,async (req, res, next) => {
+
+    const errors = validationResult(req);
+    if(!errors.isEmpty())
+        return res.status(400).json({ errors: errors.array() });
+
     try {
         const updatedTask = await Task.findOneAndUpdate({ _id: req.params.id, owner: req.user.userId },
              req.body, { returnDocument: 'after', runValidators:true });
@@ -51,12 +98,22 @@ router.patch('/:id', async (req, res) => {
         res.json(updatedTask);
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 
-router.delete('/:id', async (req, res) => {
-    try {
+router.delete('/:id', [
+    param('id')
+    .isMongoId()
+    .withMessage('Invalid task ID format')
+    ],
+
+    async (req, res, next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty())
+        return res.status(400).json({ errors: errors.array() });
+    
+        try {
         const deletedTask = await Task.findOneAndDelete({ 
             _id: req.params.id,
             owner: req.user.userId
@@ -66,7 +123,7 @@ router.delete('/:id', async (req, res) => {
          res.json({ message: 'Task was deleted successfully' });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        next(err);
     }
 });
 

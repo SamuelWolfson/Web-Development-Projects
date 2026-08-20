@@ -8,7 +8,7 @@ title:{
 },
 message:{
 type: String,
-required: [true, 'Task message is required'],
+required: false,
 trim: true
 },
 completed: {
@@ -17,7 +17,7 @@ completed: {
 },
 owner: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    required: false,
     ref: 'User'
 }
 },{
